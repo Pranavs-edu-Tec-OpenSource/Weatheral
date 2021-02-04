@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">			
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+      
+				<link rel="stylesheet" href="style.css">
+  <head>
+  				<meta name='viewport' 
+     content='width=device-width, initial-scale=1.0, maximum-scale=1.0, 
+     user-scalable=0' >
+  				<link rel="shortcut icon" type="image/x-icon" href="weatheral/weatheral.ico">
+    <meta charset="UTF-8" />
+    <meta name="theme-color" content="#9142ff" />			
+<meta name="msapplication-navbutton-color" content="#9142ff" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>Weatheral : Live Weather & Temperature</title>
+    <style>
+    				
+    				
+    				@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap');
+    				@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+
+:root{
+				--bar-height: 72px;
+				--color-primary:#9142ff;
+		  	--para-color: #f8ebff;
+				--color-primary-light:#dfaaff;
+				--color-primary-bar:#9142ff;
+				--border:#9a42ff;
+}
+body{
+				margin:0;
+				padding:0;
+				font-family: 'Raleway', sans-serif;
+    				}
+section{
+				padding-top: var(--bar-height);
+				}
+.u-centered{
+				width:100%;
+				max-width: 1200px;
+				margin:0 auto;
+				padding:16px;
+				box-sizing:border-box;
+}
+.call-to-action{
+				max-width:400px;
+				padding: 32px;
+				box-sizing:border-box;
+				color:#ffffff;
+				background: rgba(0,0,0,0.1);
+				border-radius:16px;
+}
+.call-to-action__title{
+				margin-top:0;
+}
+.call-to-action__discription{
+				font-weight:500;
+				font-size:1.1em;
+}
+.bar{
+				position:fixed;
+				z-index:2;
+				top:0;
+				left:0;
+				width:100%;
+				height:var(--bar-height);
+				box-shadow: 0 0 10px rgba(0,0,0,0.40);
+				transition: background 0.15s;
+}
+.bar--bg{
+				background: var(--color-primary-bar);
+}
+.bar__content{
+				height: 100%;
+				display:flex;
+				justify-content:space-between;
+				align-items:center;
+}
+.bar__nav-toggle{
+				cursor:pointer;
+}
+.bar__nav-toggle > i{
+				color:#ffffff;
+				font-size:2em;
+}
+#inpNavToggle{
+				display:none;
+}
+#inpNavToggle:checked ~ .nav{
+				display:flex;
+}
+.nav{
+      display:none;
+				flex-direction: column;
+				position:fixed;
+				top: var(--bar-height);
+				left:0;
+				width:100%;
+				height: calc(100vh - var(--bar-height));
+				padding:32px;
+				background: #a555ff;
+				box-sizing:border-box;
+				
+}
+.nav__link{
+				font-weight:500;
+				padding:16px 0;
+				text-decoration:none;
+				color:#fff;
+				border-bottom: 1px solid #fff;
+}
+.nav__link:hover{
+				opacity: 0.8;
+}
+.nav_pad{
+				padding-top: var(--bar-height);
+}
+@media screen and (min-width: 767px){
+				.bar__nav-toggle{
+								display:none;
+				}
+				.nav{
+								display:initial;
+								position:static;
+								width:unset;
+								height:unset;
+								background: transparent;
+				}
+				.nav__link{
+								border-bottom:none;
+				}
+				.nav__link:not(:last-of-type){
+								margin-right:24px;
+				}
+}
+
+
+
+#searchUser{
+				position:relative;
+				width:170px;
+				border:none;
+				outline:none;
+				border-radius:20px 0px 20px 0px;
+				height:25px;
+				padding: 17px 115px 16px 15px;
+				
+				margin: 0px 7px 0px 7px;
+				background:var(--color-primary-bar);
+				
+				color: #fff;
+				font-size: 18px;
+				font-weight:bold;
+				font-family: 'Raleway', sans-serif;
+				letter-spacing:1px;
+				box-shadow: 5px 5px 30px rgba(0,0,0,.2);
+}
+@media screen and (min-width: 360px){
+				#searchUser{
+				position:relative;
+				width:210px;
+				border:none;
+				outline:none;
+				border-radius:20px 0px 20px 0px;
+				height:25px;
+				padding: 17px 115px 16px 15px;
+				
+				margin: 0px 7px 0px 7px;
+				background:var(--color-primary-bar);
+				
+				color: #fff;
+				font-size: 18px;
+				font-weight:bold;
+				font-family: 'Raleway', sans-serif;
+				letter-spacing:1px;
+				box-shadow: 5px 5px 30px rgba(0,0,0,.2);
+}
+}
+
+@media screen and (min-width: 767px){
+				#searchUser{
+				position:relative;
+				width:270px;
+				border:none;
+				outline:none;
+				border-radius:20px 0px 20px 0px;
+				height:25px;
+				padding: 17px 115px 16px 15px;
+				
+				margin: 0px 7px 0px 7px;
+				background:var(--color-primary-bar);
+				
+				color: #fff;
+				font-size: 18px;
+				font-weight:bold;
+				font-family: 'Raleway', sans-serif;
+				letter-spacing:1px;
+				box-shadow: 5px 5px 30px rgba(0,0,0,.2);
+}
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #fff;
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #fff;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: #fff;
+}
+
+
+.btn-primary{
+	 position: absolute;
+  outline:none;
+  border:none;
+  height: 60px;
+  width: 60px;
+  background: #fff;
+  border-radius:0px 0px 20px 0px;
+  margin:4px;
+  text-align: center;
+  line-height: 60px;
+  font-size: 22px;
+  color: #664AFF;
+  cursor: pointer;
+  z-index: 1;
+  height: 50px;
+  transform: translatex(-65px);
+  width: 50px;
+  font-size: 20px;
+  background: #fff;
+  color: var(--color-primary-bar);
+}
+
+.btn-primar{
+	 position: absolute;
+  outline:none;
+  border:none;
+  height: 60px;
+  width: 60px;
+  background: #fff;
+  border-radius:10px 0px 0px 10px;
+  margin:4px;
+  text-align: center;
+  line-height: 60px;
+  font-size: 22px;
+  color: #664AFF;
+  cursor: pointer;
+  z-index: 1;
+  height: 50px;
+  transform: translatex(-115.5px);
+  width: 50px;
+  font-size: 20px;
+  background: #fff;
+  color: var(--color-primary-bar);
+}
+
+
+#web_hed{
+				color: var(--color-primary-bar);
+				font-weight:bold;
+				letter-spacing:1px;
+				border:solid var(--color-primary-bar) 2px ;
+}
+
+s{
+				
+				206
+				242
+}
+
+.city{
+				position: absolute;
+				width:90.4%;
+				border:none;
+				outline:none;
+				border-radius:20px 0px 20px 0px;
+				height:25px;
+				padding: 7% 5%;
+				transform: translatey(-112px);
+				
+				margin: 0px;
+				background:#a580ff;
+				z-index-1;
+				color: #fff;
+				font-size: 18px;
+				font-weight:bold;
+				
+				position: absolute;
+				box-shadow: 0px 0px 15px 0px rgba(0,0,0,.4);
+}
+
+@media screen and (min-width: 767px){
+				.city{
+				position: absolute;
+				width:90.4%;
+				border:none;
+				outline:none;
+				border-radius:20px 0px 20px 0px;
+				height:25px;
+				padding: 5% 5%;
+				transform: translatey(-112px);
+				
+				margin: 0px;
+				background:#a580ff;
+				z-index-1;
+				color: #fff;
+				font-size: 20px;
+				font-weight:bold;
+				
+				position: absolute;
+				box-shadow: 0px 0px 15px 0px rgba(0,0,0,.4);
+}
+}
+.big_card{
+				
+				position:relative;
+				width:70%;
+				background: linear-gradient(to bottom right, var(--color-primary), var(--color-primary-light));
+				
+				padding-top:70px;
+				box-shadow: 10px 15px 25px 5px rgba(0,0,0,.2);
+				margin:0;
+				border: #a580ff 2px solid;
+				border-radius:20px 0px 20px 0px;
+}
+
+.info_crd{
+				
+				
+				color:#fff;
+				font-weight:bold;
+				letter-spacing:1px;
+}
+
+.temp{
+				background:rgba(0,0,0,.1);
+				border-radius:20px 0px 20px 0px;
+				padding:5px;
+				height:94px;
+				width:100px;
+				font-size:40px;
+				font-family: 'Rubik', sans-serif;
+				letter-spacing:0.1px;
+}
+
+
+								.footer_weatheral {
+								
+												background:#3b2369;
+												padding:10%;
+												color:#a0a0a0;
+								}
+								.support_img{
+												height:70px;
+												margin:0px;
+								}
+								.hr{
+												width:70%;
+												height:0.1px;
+								}
+								.footer_element{
+												margin-top:70px;
+												display:block;
+								}
+								.footer_element_text{
+												text-decoration:none;
+												color:#ffffff;
+												width:200px;
+												margin:10px;
+												display:block;
+								}
+
+#error{
+					border: #a580ff 0.01px solid;
+			 background: var(--para-color);
+				border-radius:20px 0px 20px 0px;
+				margin:10%;
+				padding:6px;
+				padding-top:20px;
+			  padding-bottom:20px;
+			  box-shadow: 10px 15px 25px 5px rgba(0,0,0,.2);
+}
+#pole{
+				width:70%;
+				height:50px;
+				margin:8px;
+				background:none;
+				outline:none;
+				border:2px solid var(--border);
+				border-radius:20px 0px 20px 0px;
+				color:#9a42ff;
+				font-family: 'Raleway', sans-serif;
+				font-size:150%;
+				font-weight:bold;
+}
+
+.hed_ico{
+				width:300px;
+}
+.tit_ico{
+				height:30px;
+}
+.dispnon{
+				display:none;
+}
+
+.banner {
+				background:red;
+				display:none;
+}
+.banner__content {
+				padding:16px;
+				max-width: 767px;
+				margin: 0 auto;
+				display:flex;
+				align-items:center;
+}
+.banner__text {
+				flex-grow:1;
+				line-height:1.4;
+}
+.banner__close {
+				background:none;
+				border:none;
+				cursor:pointer;
+				outline:none;
+}
+.banner__text,
+.banner__close > span {
+				color:white;
+}
+.info_txts {
+				font-family: 'Rubik', sans-serif;
+				display:block;
+				margin:20px;
+}
+.info_icnn {
+				height:70px;
+				margin-bottom:-20px;
+}
+.icon__info{
+				background:rgba(0,0,0,.1);
+				width: 70%;
+				max-width:400px;
+				padding:10px;
+				border-radius:20px 0px 20px 0px;
+}
+    </style>
+  </head>
+<body>
+			
+    
+        <div class="bar bar--bg">
+								<div class="bar__content u-centered">
+												<h5 class="call-to-action__discription">
+																<img src="weatheral/weatheral.png" alt="Weatheral Logo" class="tit_ico">
+																</h5>
+												<input type="checkbox" id="inpNavToggle">
+												<label for="inpNavToggle" class="bar__nav-toggle">
+																<i class="material-icons">menu</i>
+												</label>
+												<nav class="nav">
+																<a class="nav__link" href="https://pranavswebportal.ml">Pranav's Web Portal</a>
+																<a class="nav__link" href="https://shrirajtechnicals.ga">Shriraj Technicals</a>
+																<a class="nav__link" href="https://weatheral-feedback.ml">Help & Feedback</a>
+																<a class="nav__link" href="">Disclaimer</a>
+																
+												</nav>
+								</div>
+				</div>
+        
+ 
+        
+        <section>
+        	<div class="banner">
+							<div class="banner__content">
+											<div class="banner__text">
+															<strong>Note:</strong> We make use of Cookies to make our Websites work much better. This also let you to revisit our site more quickly and reduce your bandwidth.
+											</div>
+											<button class="banner__close" type="button"><span class="material-icons">close</span></button>
+							</div>
+			</div>
+        <div class="searchContainer">
+            <div class="search card card-body">
+            					<center>		
+            									<br><br>
+              <img src="weatheral/weatheral.png" alt="Weatheral Logo" class="hed_ico">
+              <br><br>
+                <p class="lead">Enter Your City's Name And Hit Search!<br>Please turn on GPS before using 'Use my location' feature.</p>
+                 </center>
+                <center>
+                <input type="text" id="searchUser" class="form-control" value="" placeholder="Location...">
+                <button class="btn btn-primary" id="submit"><i class="material-icons">search</i></button>
+                <button class="btn btn-primar" id="location" ><i class="material-icons"onclick="getLocation()">place</i></button>
+                </center>
+            </div>
+            <br>
+            
+							
+        
+        
+        
+        
+        
+        
+        <div id="content">
+<div id="data.hp">
+
+
+</div>
+<br>
+        </div>
+        <br><br>
+        
+        
+        
+        
+        
+        
+        	<div id="error">
+        					<center>
+												<p>Help & Support<i class="material-icons">contact_support</i></p><a href="https://weatheral-feedback.ml"><button id="pole"><i class="material-icons">launch</i></button></a>
+												</center>
+												</div>
+												<br><br>
+         	<span id="latitude" class="dispnon"></span><br><br>
+				<span id="kyc" class="dispnon"></span>
+            
+        </div>
+       
+        </section>
+        <footer class="footer_weatheral">
+        				<center>
+        				<p class="copyright">Pranav's edu Tec &copy</p>
+        				<br>
+        				<hr class="hr">
+        				<br>
+        				<div class="credits">
+        								<p class="Credits_hed">In Partnership With</p>
+        								<a href="https://shrirajtechnicals.ga"><img src="spimg/Shriraj.jpg" alt="Shriraj Technicals" class="support_img"></a><br><br>
+        								<br><br><br>
+        								<p class="Credits_hed">Powered By</p>
+        								<a href="https://openweathermap.org"><img src="spimg/OpenWeatherMap.png" alt="OpenWeatherMap" class="support_img"></a>
+        								<br><br><br><br>
+        								<a href="https://opencagedata.com"><img src="spimg/OpenCage.svg.png" alt="Opencagedata" class="support_img"></a>
+        								<br><br><br><br>
+        								<a href="https://github.com"><img src="spimg/github.png" alt="GitHub" class="support_img"></a>
+        								<br><br><br><br>
+        								
+        								<br>
+        				</div>
+        				<hr class="hr">
+        				<div class="footer_element">
+        								<a href="" class="footer_element_text">Help & Support</a>
+        								<br>
+        								<a href="" class="footer_element_text">Feedback</a>
+        								<br>
+        								<a href="" class="footer_element_text">Disclaimer</a>
+        				</div>
+        				<div class="footer_contact">
+        								
+        				</div>
+        				</center>
+        </footer>
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       
+  </body>
+  <script src="fetch.js"></script>
+  <script src="hg.js"></script>
+  <script src="app.js"></script>
+  <script src="bnr.js"></script>
+   <script>
+
+
+                    var x = document.getElementById("latitude");
+                    function getLocation() {
+                      if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(showPosition);
+                      } else {
+                        x.innerHTML = "Geolocation is not supported by this browser.";
+                      }
+                    }
+                    
+                    
+                    function showPosition(position) {
+                                       x.innerHTML = "Latitude: " + position.coords.latitude; +
+                      "<br>Longitude: " + position.coords.longitude;
+                    
+                				
+  var apikey = 'Your_OpenCage_API_Key';
+  
+  var latitude = position.coords.latitude;
+  				 
+  var longitude = position.coords.longitude;
+
+  var api_url = 'https://api.opencagedata.com/geocode/v1/json'
+
+
+  var request_url = api_url
+    + '?'
+    + 'key=' + apikey
+    + '&q=' + encodeURIComponent(latitude + ',' + longitude)
+    + '&pretty=1'
+    + '&no_annotations=1';
+
+  // see full list of required and optional parameters:
+  // https://opencagedata.com/api#forward
+
+  var request = new XMLHttpRequest();
+  request.open('GET', request_url, true);
+
+  request.onload = function() {
+    // see full list of possible response codes:
+    // https://opencagedata.com/api#codes
+
+    if (request.status == 200){ 
+      // Success!
+      var data = JSON.parse(request.responseText);
+      // alert(data.results[0].formatted);
+
+var format = data.results[0].formatted;
+
+
+document.getElementById('searchUser').value = data.results[0].components.city;
+
+    } else if (request.status <= 500){ 
+      // We reached our target server, but it returned an error
+                           
+      console.log("unable to geocode! Response code: " + request.status);
+      
+      var data = JSON.parse(request.responseText);
+      console.log(data.status.message);
+    } else {
+      console.log("server error");
+    }
+  };
+
+  request.onerror = function() {
+    // There was a connection error of some sort
+    console.log("unable to connect to server");        
+  };
+
+  request.send();  
+  // make the request
+                }    
+                </script>
+</html>
